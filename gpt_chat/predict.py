@@ -157,7 +157,7 @@ def main():
     model=loaded_model
     model.to(device)
     model.eval()
-    print('开始对文本生成摘要，输入CTRL + C，则退出')
+    print('开始智能对话，输入CTRL + C，则退出')
 
     while True:
         content = input("输入的正文为：")
