@@ -70,15 +70,12 @@ def collate_fn(data):
 
 #第7章/数据加载器
 loader = torch.utils.data.DataLoader(dataset=dataset['train'],
-                                     batch_size=15,
+                                     batch_size=60,
                                      collate_fn=collate_fn,
                                      shuffle=True,
                                      drop_last=True,
                                      )
 print(len(loader))
-
-model = GPT2LMHeadModel.from_pretrained('./pretrained')
-model.to(device)
 
 def train(epochs,sign=0):
     if sign==1:
@@ -87,10 +84,15 @@ def train(epochs,sign=0):
         # 将模型移到训练设备（例如 GPU）
         loaded_model = loaded_model.to('cuda')
         model=loaded_model
+    else:
+        model = GPT2LMHeadModel.from_pretrained('uer/gpt2-distil-chinese-cluecorpussmall')
+
+    model.to(device)
+
 
 
     loss_func = torch.nn.CrossEntropyLoss()
-    optim = torch.optim.Adam(model.parameters(), lr=5e-5)
+    optim = torch.optim.Adam(model.parameters(), lr=5e-4)
     sched = torch.optim.lr_scheduler.StepLR(optim, step_size=5, gamma=0.5)
 
     for epoch in range(epochs):
@@ -121,4 +123,4 @@ def train(epochs,sign=0):
         torch.save(model, 'model/文本摘要.model')
 
 
-train(10,1)
+train(10)

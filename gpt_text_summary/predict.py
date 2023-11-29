@@ -4,7 +4,6 @@ import copy
 from transformers import BertTokenizer
 import torch.nn.functional as F
 import os
-from Model import Transformer
 def set_args():
     """设置模型预测所需参数"""
     parser = argparse.ArgumentParser()
